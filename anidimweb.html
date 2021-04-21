@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/all.css">
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAbZDbrcjTGb8PoS1D5bpYG4eKYZXR1zeI",
+            authDomain: "bazerwebapp.firebaseapp.com",
+            projectId: "bazerwebapp",
+            storageBucket: "bazerwebapp.appspot.com",
+            messagingSenderId: "364358955289",
+            appId: "1:364358955289:web:0230a77876e15511869588",
+            measurementId: "G-6414G13N1C",
+            databaseURL: "https://bazerwebapp-default-rtdb.firebaseio.com/"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+</head>
+
+<style>
+    body {
+        margin: 0px;
+
+    }
+
+    #profile_active {
+        background-color: white;
+
+    }
+
+    #noAccount {
+        margin: 40vh 10% 0% 10%;
+        text-align: center;
+    }
+
+    .noAccountItem {
+        padding: 10px 15px;
+        background-color: royalblue;
+        margin: 10px 0px;
+        border-radius: 50px;
+        color: white;
+        font-size: large;
+    }
+
+    /* login and regdster */
+
+    #navbar {
+        position: fixed;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        width: 100%;
+        top: 0px;
+        background-color: white;
+        z-index: 100;
+        user-select: none;
+        color: brown;
+    }
+
+    .nav_item {
+        padding: 14px 10px;
+        font-size: 1.3em;
+        cursor: pointer;
+    }
+
+    .nav_item:hover {
+        border: 0px solid white;
+
+    }
+
+    .nav_right {
+        margin-right: 12px;
+
+    }
+
+    .nav_left {
+        margin-left: 12px;
+
+    }
+
+    .container,
+    .submit {
+        margin: 60px 0px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .infobox {
+        margin-left: -25px;
+        width: 80%;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 10px 5px;
+        font-size: large;
+    }
+#conditionbox{
+    padding: 10px;
+}
+#condition, #term{
+    color: royalblue;
+}
+
+    .submit {
+        background-color: royalblue;
+        width: 70%;
+        margin: 0px 15%;
+        padding: 10px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+    }
+
+    @media screen and (min-width: 480px) {
+        body {
+            margin: 0px 0%;
+        }
+
+    }
+</style>
+
+<body>
+    <div id="navbar">
+        <div id="nav_left" class="nav_left nav_item">
+            <span id="menu">
+
+            </span>
+
+        </div>
+        <div>
+            <p id="app_title">আনিদিম বিটা</p>
+        </div>
+        <div id="nav_right" class="nav_right nav_item">
+            <!-- <span><i class="fas fa-search"></i></span> -->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="infobox">
+            <div class="name">
+                <span></span>
+                <input id="username" placeholder="আপনার নাম দিন" type="text">
+
+            </div>
+            <div class="add">
+                <span></span>
+                <input id="useraddress" placeholder="আপনার ঠিকানা ‍দিন" type="text">
+            </div>
+            <div class="phone">
+                <span></span>
+                <input id="userphone" placeholder="আপনার মোবাইল দিন " type="tel">
+            </div>
+            <div class="productname">
+                <textarea id="userproduct" name="" placeholder="বাজার তালিকা টাইপ করুন" rows="10"></textarea>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="conditionbox">
+        <p>আমি <span id="appName">“আনিদিম”</span> অ্যাপের যাবতীয় <span id="condition"> শর্তাবলী</span> এবং <span id="term"> প্রাইভিসি পলিসি</span> মেনে নিয়ে পণ্য অর্ডার করছি।</p>
+    </div>
+    <div id="submitbtn" onclick="set()" class="submit">
+        <span>অর্ডার দিন</span>
+    </div>
+
+</body>
+<script>
+    // console.log(firebaseConfig)
+
+function getid(id){
+    return document.getElementById(id)
+}
+
+var condition = document.getElementById('condition')
+var term = document.getElementById('term')
+var submitbtn = document.getElementById('submitbtn')
+
+function phonenum(num){
+    if(num.length == 11){
+        if(num.startsWith('01')){
+            return true
+        }else{
+       // ANDROID.toast('সঠিক মোবাইল নম্বর দিন')
+       alert('ssss')
+       return false
+       
+        }
+    }else{
+       // ANDROID.toast('১১ ডিজিট মোবাইল নম্বর দিন')
+        return false
+    }
+}
+
+function valid(v){
+    if(v === ''){
+        return false
+    }else{
+        
+        return true
+    }
+}
+
+function prod(txt){
+    var pro = []
+    var each = txt.split('/^/gm')
+    pro.push(each)
+    console.log(pro)
+    return pro
+
+}
+
+
+    function set() {
+
+
+       if(phonenum(getid('userphone').value) && valid(getid('username').value) && valid(getid('useraddress').value) && valid(getid('userproduct').value)){
+        var ref = new Firebase('https://bazerwebapp-default-rtdb.firebaseio.com/');
+        var userref = ref.child("User");
+        userref.push({
+            name: getid('username').value,
+            phone: getid('userphone').value,
+            address: getid('useraddress').value,
+            date:  document.lastModified,
+            product: getid('userproduct').value,
+            deliver: false
+
+        });
+
+        
+       }else{
+           alert('সব খালিঘর ঠিকমত পূরণ করুন')
+       }
+
+    }
+    // Generate a reference to a new location and add some data using push()
+    //var newPostRef = postsRef.push();
+
+    // Get the unique key generated by push()
+    //var postId = userref.key;
+
+    // console.log(postId())
+    // ref.push({
+    //     name: [1,2,3],
+    // })
+
+    //var uref = firebase.database().ref('User/')
+    // userref.set({
+    //     kol: {
+    //         a: 'mae',
+    //         age: 20
+    //     },
+    //     kolo: {
+    //         a: 'mae',
+    //         age: JSON.stringify([1, 2])
+    //     }
+    // })
+    var refr = firebase.database().ref("User");
+
+    refr.on("value", function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+            var keys = []
+            var childData = childSnapshot.val();
+            var key = childSnapshot.key
+            var name = childData.name;
+            var phone = childData.phone;
+            var add = childData.address;
+            var date = childData.date;
+            var delever = childData.deliver;
+            var product = childData.product;
+
+
+            console.log(Object.entries(childData));
+            console.log(name)
+            console.log(phone)
+            console.log(add)
+            console.log(date)
+            console.log(delever)
+            //console.log(add)
+
+
+
+        });
+
+    });
+    const doCreateCompany = (name) => {
+        var ref = refr.push();
+        // var key = ref.key;
+        ref.set({ name })
+    }
+
+    //doCreateCompany('uj')
+
+</script>
+
+</html>
